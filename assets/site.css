@@ -233,6 +233,9 @@ a.choice:focus-visible .choice__title { text-decoration: underline; text-decorat
 .foot__k { color: var(--gold); text-transform: uppercase; letter-spacing: .16em; margin-right: 8px; }
 .foot__replay { background: none; border: 0; padding: 0 0 2px; cursor: pointer; text-decoration: none; border-bottom: 1px solid var(--hair); transition: color .4s var(--ease), border-color .4s var(--ease); }
 .foot__replay:hover { color: var(--gold-soft); border-color: var(--gold); }
+.foot__link { color: var(--body); text-decoration: none; border-bottom: 1px solid var(--hair); padding-bottom: 2px; overflow-wrap: break-word; transition: color .4s var(--ease), border-color .4s var(--ease); }
+.foot__link:hover { color: var(--gold-soft); border-color: var(--gold); }
+main:focus { outline: none; }
 
 /* ===================== Splash: the door (original, with the seam fixed) ===================== */
 /* --a is the door angle (degrees, negative = toward the viewer), --f is how much light gets

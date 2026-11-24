@@ -27,6 +27,9 @@
       root.classList.remove("splash-on");
       entered();
       splash.classList.add("is-done");
+      // hand keyboard and screen-reader focus to the page, not the door that is fading away
+      var main = document.getElementById("main");
+      if (main && (!document.activeElement || splash.contains(document.activeElement) || document.activeElement === document.body)) main.focus({ preventScroll: true });
       setTimeout(function () { if (splash.parentNode) splash.parentNode.removeChild(splash); }, 1700);
     };
     var openDoor = function () {
