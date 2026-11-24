@@ -120,6 +120,12 @@ p { margin: 0; }
 .signup input::placeholder { color: var(--mute); }
 .signup input:focus { outline: none; border-color: var(--gold); }
 .signup__msg { flex-basis: 100%; min-height: 1.5em; font: italic 400 19px/1.4 var(--serif); color: var(--gold-soft); }
+.signup__more { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 12px; animation: more-in .9s var(--ease) both; }
+.signup .signup__more input { flex: 1 1 160px; }
+.signup .signup__more input[name=zip] { flex: 0 1 130px; }
+.signup__more .btn--line { background: transparent; }
+.signup .signup__ask { flex-basis: 100%; margin: 0; font: italic 400 19px/1.4 var(--serif); color: var(--body); }
+@keyframes more-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .signup__hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }   /* honeypot: never seen by people */
 
 /* ---------- Page entrance (after the splash, or on load) ---------- */

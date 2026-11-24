@@ -140,7 +140,13 @@
     sending: "Opening…",
     thanks: "Thank you. We'll write when the next door opens.",
     stuck: "The door stuck. Try again in a moment.",
-    invalid: "That address doesn't look quite right."
+    invalid: "That address doesn't look quite right.",
+    ask: "What should we call you? Both are optional.",
+    saving: "Saving…",
+    badName: "That name doesn't look quite right.",
+    badZip: "That ZIP code doesn't look quite right.",
+    named: function (name) { return "Thank you, " + name + ". We'll write when the next door opens."; },
+    noted: "Noted. We'll write when the next door opens."
   };
 
 /* email-check:start (keep identical in website/assets/site.js and mailing-list/Code.gs) */
@@ -163,6 +169,25 @@
     if (EMAIL_FAKE_TLDS.indexOf(tld) !== -1 || EMAIL_FAKE_DOMAINS.indexOf(name + "." + tld) !== -1) return "fake";
     if (/^(.)\1{3,}$/.test(name) || /^(.)\1{3,}$/.test(local)) return "fake";   // aaaa@gmail.com, me@xxxx.com
     return "";
+  }
+  // Name and ZIP: both optional, asked after sign-up. "" when fine (or left blank), otherwise a short reason.
+  var NAME_OK = (function () {
+    try { return new RegExp("^[\\p{L}\\p{M}](?:[\\p{L}\\p{M}'’. -]*[\\p{L}\\p{M}.])?$", "u"); }
+    catch (e) { return /^[A-Za-zÀ-ɏ](?:[A-Za-zÀ-ɏ'’. -]*[A-Za-zÀ-ɏ.])?$/; }   // older browsers
+  })();
+  function normalizeName(value) { return String(value == null ? "" : value).replace(/\s+/g, " ").trim(); }
+  function checkName(name) {
+    if (!name) return "";
+    if (name.length > 40) return "too-long";
+    return NAME_OK.test(name) ? "" : "shape";
+  }
+  function normalizeZip(value) {
+    var zip = String(value == null ? "" : value).replace(/\s+/g, "");
+    return /^\d{9}$/.test(zip) ? zip.slice(0, 5) + "-" + zip.slice(5) : zip;
+  }
+  function checkZip(zip) {
+    if (!zip) return "";
+    return /^\d{5}(?:-\d{4})?$/.test(zip) && zip.slice(0, 5) !== "00000" ? "" : "shape";
   }
 /* email-check:end */
 
@@ -192,9 +217,20 @@
   }
 
   var recent = [];   // gentle cap per visit: a few tries a minute is plenty for a person
-  document.querySelectorAll("[data-signup]").forEach(function (form) {
+  function allowTry() {
+    var now = Date.now();
+    recent = recent.filter(function (t) { return now - t < 60000; });
+    if (recent.length >= 5 || !SIGNUP_URL) {
+      if (!SIGNUP_URL && window.console) console.warn("Sign-up: SIGNUP_URL is not set in assets/site.js");
+      return false;
+    }
+    recent.push(now);
+    return true;
+  }
+
+  document.querySelectorAll("[data-signup]").forEach(function (form, n) {
     var input = form.querySelector("input[type=email]"), msg = form.querySelector(".signup__msg"), btn = form.querySelector("button");
-    var label = btn.textContent, busy = false;
+    var label = btn.textContent, busy = false, viaKeyboard = false;
 
     // Honeypot: off-screen and skipped by keyboards and screen readers. People leave it empty; form-filling bots don't.
     var trap = document.createElement("div");
@@ -214,20 +250,14 @@
       msg.textContent = text;
     }
 
+    input.addEventListener("keydown", function (e) { viaKeyboard = e.key === "Enter"; });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (busy || btn.disabled) return;
       var email = normalizeEmail(input.value);
       if (hp.value) { settle(SAY.thanks, true); return; }   // a bot: thank it and send nothing
       if (checkEmail(email)) { msg.textContent = SAY.invalid; input.focus(); return; }
-      var now = Date.now();
-      recent = recent.filter(function (t) { return now - t < 60000; });
-      if (recent.length >= 5 || !SIGNUP_URL) {
-        if (!SIGNUP_URL && window.console) console.warn("Sign-up: SIGNUP_URL is not set in assets/site.js");
-        settle(SAY.stuck, false);
-        return;
-      }
-      recent.push(now);
+      if (!allowTry()) { settle(SAY.stuck, false); return; }
 
       busy = true;
       form.setAttribute("aria-busy", "true");
@@ -236,12 +266,66 @@
       btn.disabled = true;
       input.readOnly = true;
       msg.textContent = "";
-      sendSignup({ email: email, source: form.getAttribute("data-source") || "", website: "" }).then(function (res) {
-        if (res.ok) settle(SAY.thanks, true);
+      var source = form.getAttribute("data-source") || "";
+      sendSignup({ email: email, source: source, website: "" }).then(function (res) {
+        if (res.ok) {
+          settle(SAY.thanks, true);
+          if (res.key) askDetails(email, source, res.key);
+        }
         else if (res.error === "invalid") { settle(SAY.invalid, false); input.focus(); }
         else settle(SAY.stuck, false);
       });
     });
+
+    // Step two, after a sign-up has landed: an optional name and ZIP.
+    function askDetails(email, source, key) {
+      var more = document.createElement("div");
+      more.className = "signup__more";
+      more.innerHTML =
+        '<p class="signup__ask" aria-live="polite"></p>' +
+        '<label class="sr" for="signup-name-' + n + '">Name (optional)</label>' +
+        '<input id="signup-name-' + n + '" name="first_name" type="text" autocomplete="name" autocapitalize="words" spellcheck="false" maxlength="40" placeholder="Name">' +
+        '<label class="sr" for="signup-zip-' + n + '">ZIP code (optional)</label>' +
+        '<input id="signup-zip-' + n + '" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="10" placeholder="ZIP code">' +
+        '<button class="btn btn--line" type="button">Save</button>';
+      form.appendChild(more);
+      var ask = more.querySelector(".signup__ask"), name = more.querySelector("[name=first_name]"),
+          zip = more.querySelector("[name=zip]"), save = more.querySelector("button"), saving = false;
+      ask.textContent = SAY.ask;
+      if (viaKeyboard) name.focus({ preventScroll: true });   // they're typing: carry on to the next field
+
+      function send() {
+        if (saving) return;
+        var first = normalizeName(name.value), code = normalizeZip(zip.value);
+        if (checkName(first)) { ask.textContent = SAY.badName; name.focus(); return; }
+        if (checkZip(code)) { ask.textContent = SAY.badZip; zip.focus(); return; }
+        if (!first && !code) { ask.textContent = SAY.ask; name.focus(); return; }
+        if (hp.value) { done(first); return; }
+        if (!allowTry()) { ask.textContent = SAY.stuck; return; }
+        saving = true;
+        save.style.minWidth = save.getBoundingClientRect().width + "px";
+        save.textContent = SAY.saving;
+        save.disabled = name.readOnly = zip.readOnly = true;
+        sendSignup({ step: "details", email: email, key: key, source: source, first_name: first, zip: code, website: "" }).then(function (res) {
+          saving = false;
+          save.textContent = "Save";
+          save.style.minWidth = "";
+          save.disabled = name.readOnly = zip.readOnly = false;
+          if (res.ok) done(first);
+          else ask.textContent = res.error === "name" ? SAY.badName : res.error === "zip" ? SAY.badZip : SAY.stuck;
+        });
+      }
+      function done(first) {
+        var hadFocus = more.contains(document.activeElement);
+        form.removeChild(more);
+        msg.textContent = first ? SAY.named(first) : SAY.noted;
+        if (hadFocus) input.focus({ preventScroll: true });
+      }
+      save.addEventListener("click", send);
+      [name, zip].forEach(function (el) {
+        el.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); send(); } });
+      });
+    }
   });
 
   document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
