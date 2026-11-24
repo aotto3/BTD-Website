@@ -133,14 +133,114 @@
     requestAnimationFrame(tick);
   }
 
-  /* ---------- Mailing list (not connected to a mailing service yet) ---------- */
+  /* ---------- Mailing list: each sign-up becomes a row in the "BTD Mailing List" Google Sheet ---------- */
+  // The web-app URL from the Apps Script deploy (mailing-list/DEPLOY.md). It ends in /exec.
+  var SIGNUP_URL = "";
+  var SAY = {
+    sending: "Opening…",
+    thanks: "Thank you. We'll write when the next door opens.",
+    stuck: "The door stuck. Try again in a moment.",
+    invalid: "That address doesn't look quite right."
+  };
+
+/* email-check:start (keep identical in website/assets/site.js and mailing-list/Code.gs) */
+  var EMAIL_FAKE_DOMAINS = ["example.com", "example.net", "example.org", "test.com", "fake.com", "fakeemail.com", "noemail.com", "nomail.com", "none.com", "asdf.com"];
+  var EMAIL_FAKE_TLDS = ["test", "example", "invalid", "localhost", "local", "con", "cmo", "ocm", "vom", "xom", "cpm", "comm", "coom"];
+  function normalizeEmail(value) { return String(value == null ? "" : value).trim().toLowerCase(); }
+  // "" when the address is fine, otherwise a short reason. Expects normalizeEmail() output.
+  function checkEmail(email) {
+    if (!email) return "empty";
+    if (email.length > 254) return "too-long";
+    var at = email.indexOf("@");
+    if (at < 1 || email.lastIndexOf("@") !== at) return "shape";
+    var local = email.slice(0, at), domain = email.slice(at + 1), labels = domain.split(".");
+    if (local.length > 64 || domain.length > 253) return "too-long";
+    if (!/^[a-z0-9](?:[a-z0-9._+'-]*[a-z0-9_-])?$/.test(local) || local.indexOf("..") !== -1) return "shape";
+    if (labels.length < 2) return "shape";
+    for (var i = 0; i < labels.length; i++) if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(labels[i])) return "shape";
+    var tld = labels[labels.length - 1], name = labels[labels.length - 2];
+    if (!/^(?:[a-z]{2,24}|xn--[a-z0-9-]{1,59})$/.test(tld)) return "shape";
+    if (EMAIL_FAKE_TLDS.indexOf(tld) !== -1 || EMAIL_FAKE_DOMAINS.indexOf(name + "." + tld) !== -1) return "fake";
+    if (/^(.)\1{3,}$/.test(name) || /^(.)\1{3,}$/.test(local)) return "fake";   // aaaa@gmail.com, me@xxxx.com
+    return "";
+  }
+/* email-check:end */
+
+  // One POST, retried once if the network blinks. The script dedupes, so a retry never makes a second row.
+  // A plain form-encoded body keeps this a "simple" cross-origin request: no preflight, which Apps Script can't answer.
+  function sendSignup(fields, attempt) {
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = ctrl && setTimeout(function () { ctrl.abort(); }, 15000);
+    var request;
+    try {
+      request = fetch(SIGNUP_URL, {
+        method: "POST", body: new URLSearchParams(fields), credentials: "omit", cache: "no-store", redirect: "follow",
+        signal: ctrl ? ctrl.signal : undefined
+      });
+    } catch (err) {
+      request = Promise.reject(err);   // a browser too old for fetch: say the door stuck, never hang on "Opening…"
+    }
+    return request
+      .then(function (r) { return r.ok ? r.json() : { ok: false, error: "server" }; })
+      .catch(function () { return { ok: false, error: "network" }; })
+      .then(function (res) {
+        clearTimeout(timer);
+        res = res && typeof res === "object" ? res : { ok: false, error: "server" };
+        var retry = !res.ok && (res.error === "network" || res.error === "server") && !attempt;
+        return retry ? new Promise(function (go) { setTimeout(go, 1200); }).then(function () { return sendSignup(fields, 1); }) : res;
+      });
+  }
+
+  var recent = [];   // gentle cap per visit: a few tries a minute is plenty for a person
   document.querySelectorAll("[data-signup]").forEach(function (form) {
+    var input = form.querySelector("input[type=email]"), msg = form.querySelector(".signup__msg"), btn = form.querySelector("button");
+    var label = btn.textContent, busy = false;
+
+    // Honeypot: off-screen and skipped by keyboards and screen readers. People leave it empty; form-filling bots don't.
+    var trap = document.createElement("div");
+    trap.className = "signup__hp";
+    trap.setAttribute("aria-hidden", "true");
+    trap.innerHTML = '<label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>';
+    form.insertBefore(trap, btn);
+    var hp = trap.querySelector("input");
+
+    function settle(text, done) {
+      busy = false;
+      form.removeAttribute("aria-busy");
+      input.readOnly = false;
+      btn.textContent = label;
+      btn.style.minWidth = "";
+      btn.disabled = !!done;
+      msg.textContent = text;
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var input = form.querySelector("input[type=email]"), msg = form.querySelector(".signup__msg");
-      if (!input.value || !input.checkValidity()) { msg.textContent = "That address doesn't look quite right."; input.focus(); return; }
-      msg.textContent = "Thank you. We'll write when the next door opens.";
-      form.querySelector("button").disabled = true;
+      if (busy || btn.disabled) return;
+      var email = normalizeEmail(input.value);
+      if (hp.value) { settle(SAY.thanks, true); return; }   // a bot: thank it and send nothing
+      if (checkEmail(email)) { msg.textContent = SAY.invalid; input.focus(); return; }
+      var now = Date.now();
+      recent = recent.filter(function (t) { return now - t < 60000; });
+      if (recent.length >= 5 || !SIGNUP_URL) {
+        if (!SIGNUP_URL && window.console) console.warn("Sign-up: SIGNUP_URL is not set in assets/site.js");
+        settle(SAY.stuck, false);
+        return;
+      }
+      recent.push(now);
+
+      busy = true;
+      form.setAttribute("aria-busy", "true");
+      btn.style.minWidth = btn.getBoundingClientRect().width + "px";   // the shorter label doesn't jolt the layout
+      btn.textContent = SAY.sending;
+      btn.disabled = true;
+      input.readOnly = true;
+      msg.textContent = "";
+      sendSignup({ email: email, source: form.getAttribute("data-source") || "", website: "" }).then(function (res) {
+        if (res.ok) settle(SAY.thanks, true);
+        else if (res.error === "invalid") { settle(SAY.invalid, false); input.focus(); }
+        else settle(SAY.stuck, false);
+      });
     });
   });
 

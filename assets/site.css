@@ -120,6 +120,7 @@ p { margin: 0; }
 .signup input::placeholder { color: var(--mute); }
 .signup input:focus { outline: none; border-color: var(--gold); }
 .signup__msg { flex-basis: 100%; min-height: 1.5em; font: italic 400 19px/1.4 var(--serif); color: var(--gold-soft); }
+.signup__hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }   /* honeypot: never seen by people */
 
 /* ---------- Page entrance (after the splash, or on load) ---------- */
 .rise { opacity: 0; transform: translateY(22px); }
