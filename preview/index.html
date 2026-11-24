@@ -4,28 +4,35 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Behind the Door</title>
-<meta name="description" content="Behind the Door is an immersive theatre company in Houston, Texas, founded by Allen Otto and Chaney Moore.">
-<meta name="theme-color" content="#051412">
-<script>document.documentElement.classList.add("js");</script>
+<title>Behind the Door · Immersive theatre in Houston, Texas</title>
+<meta name="description" content="Behind the Door makes small, immersive theatre in Houston, Texas, for a handful of guests at a time. There’s a story behind every door.">
+<meta name="theme-color" content="#0c2723">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Behind the Door">
+<meta property="og:title" content="Behind the Door · Immersive theatre in Houston, Texas">
+<meta property="og:description" content="Behind the Door makes small, immersive theatre in Houston, Texas, for a handful of guests at a time. There’s a story behind every door.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script>(function(d){var r=d.documentElement;r.classList.add("js","arriving");var s=false;try{s=sessionStorage.getItem("btd-entered")==="1"}catch(e){}if(!s||/[?&]door\b/.test(location.search))r.classList.add("splash-on");})(document);</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Work+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "PerformingGroup", "name": "Behind the Door", "legalName": "Behind the Door, LLC", "description": "An immersive theatre company in Houston, Texas, making small shows for small audiences.", "foundingLocation": {"@type": "Place", "name": "Houston, Texas"}, "location": {"@type": "Place", "address": {"@type": "PostalAddress", "addressLocality": "Houston", "addressRegion": "TX", "addressCountry": "US"}}, "founder": [{"@type": "Person", "name": "Allen Otto"}, {"@type": "Person", "name": "Chaney Moore"}]}</script>
 </head>
 <body>
+<div class="veil" aria-hidden="true"></div>
 
-<!-- ===== Splash: the door ===== -->
-<div id="splash" class="splash" hidden>
+<!-- The door. Shown once per browser session; light leaks under it and down the latch side. -->
+<div id="splash" class="splash" aria-label="Entrance">
   <div class="sp-scene">
     <div class="sp-floorglow" aria-hidden="true"></div>
     <div class="sp-unit">
       <div class="sp-frame">
         <div class="sp-opening" aria-hidden="true"></div>
         <div class="sp-halo" aria-hidden="true"></div>
-        <button type="button" class="sp-leaf" id="sp-leaf" aria-label="Open the door and enter Behind the Door">
-          <i></i><i></i><i></i><i></i><b></b>
-        </button>
+        <div class="sp-seam" aria-hidden="true"></div>
+        <button type="button" class="sp-leaf" id="sp-leaf" aria-label="Open the door and enter Behind the Door"><i></i><i></i><i></i><i></i><b></b></button>
       </div>
     </div>
     <div class="sp-rays" aria-hidden="true"></div>
@@ -34,144 +41,104 @@
   </div>
   <div class="sp-flood" aria-hidden="true"></div>
   <p class="sp-hint" aria-hidden="true">Open the door</p>
-  <a class="sp-skip" href="#top" id="sp-skip">Skip</a>
+  <a class="sp-skip" href="#main" id="sp-skip">Skip</a>
 </div>
 
-<!-- ===== Home ===== -->
-<div id="home" class="home">
-  <header class="site-head" id="top">
-    <div class="wrap head-row">
-      <a class="wordmark" href="#top" aria-label="Behind the Door, home">Behind the D<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="9.6" r="2.6" fill="#c6a25a"/><path d="M10.6 11 L9.6 17 H14.4 L13.4 11 Z" fill="#c6a25a"/></svg>or</a>
-      <nav aria-label="Main">
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#work">Our work</a></li>
-          <li><a href="#founders">Founders</a></li>
-          <li><a href="#list">The list</a></li>
-        </ul>
-      </nav>
+<header class="head">
+  <div class="wrap head__in">
+    <a class="wordmark" href="./" aria-label="Behind the Door, home"><span>Behind the D</span><svg class="wordmark__key" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.6" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="10" cy="8.4" r="2.1" fill="currentColor"/><path d="M8.9 9.6h2.2l.7 4.6H8.2z" fill="currentColor"/></svg><span>or</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="company/">Company</a>
+      <a href="work/">Work</a>
+      <a href="founders/">Founders</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero hero--home pillar velvet" aria-labelledby="hero-title">
+    <div class="pillar__light" aria-hidden="true">
+      <div class="pillar__wash"></div>
+      <div class="pillar__sliver"></div>
+      <div class="pillar__floor"></div>
+      <canvas class="dust" id="dust"></canvas>
     </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="wrap hero-inner">
-        <span class="label">Immersive theatre · Houston, TX</span>
-        <h1>Small rooms.<br>Real choices.</h1>
-        <p class="lede">Allen Otto and Chaney Moore make shows for a handful of guests at a time. Join the list and we'll tell you when the next one opens.</p>
-        <form class="signup" data-signup>
-          <label class="sr" for="hero-email">Email address</label>
-          <input id="hero-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-          <button type="submit">Join the list</button>
-          <p class="signup-note" role="status" aria-live="polite"></p>
-        </form>
+    <div class="wrap hero__in">
+      <p class="label rise" style="--d:0">Immersive theatre · Houston, TX</p>
+      <h1 id="hero-title">
+        <span class="rise" style="--d:1">There’s a story</span>
+        <span class="rise" style="--d:2">behind every door.</span>
+        <em class="rise" style="--d:3">It’s waiting for you to open it.</em>
+      </h1>
+      <div class="hero__actions rise" style="--d:4">
+        <a class="btn btn--gold" href="#invite">Get an invitation</a>
+        <a class="btn btn--line" href="work/">See the work</a>
       </div>
-    </section>
-
-    <section class="about" id="about" aria-labelledby="about-h">
-      <div class="wrap about-grid">
-        <div>
-          <span class="label">About</span>
-          <h2 id="about-h" class="statement">No stage. No rows of seats. Just real people in a room making choices.</h2>
-        </div>
-        <div class="about-copy">
-          <p>Behind the Door makes theatre that is small, human and personal. From the moment you walk in, you are not watching something happen. You are part of it.</p>
-          <p>Our actors don't monologue. They converse, they listen, and they push. Each show is built around a choice that only you can make, and it stays with you after you leave.</p>
-          <dl class="tenets">
-            <div><dt>Intimacy</dt><dd>A few guests at a time, often one on one with an actor.</dd></div>
-            <div><dt>Agency</dt><dd>The story can't move without you, and your choices carry weight.</dd></div>
-            <div><dt>Reflection</dt><dd>Shows about how we connect, and what ties us to each other.</dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <section class="work" id="work" aria-labelledby="work-h">
-      <div class="wrap">
-        <span class="label">Our work</span>
-        <h2 id="work-h">Behind the Door originals</h2>
-        <ul class="tickets">
-          <li class="ticket">
-            <span class="no">Admit two · Nº 0001</span>
-            <h3>String Theory</h3>
-            <p>Two guests are split up in a tailor shop just off-center from reality. At the end, a red string: tie it or cut it.</p>
-            <span class="row"><span>In development</span><span>Houston</span></span>
-          </li>
-          <li class="ticket">
-            <span class="no">Admit one · Nº 0002</span>
-            <h3>The Archive</h3>
-            <p>Pick up an analog phone and hear the stories strangers left behind, or leave one of your own.</p>
-            <span class="row"><span>Voidspace Live</span><span>London · 2026</span></span>
-          </li>
-          <li class="ticket">
-            <span class="no">Admit eight · Nº 0003</span>
-            <h3>WKRV: Stay Tuned</h3>
-            <p>A tour of a 1987 TV set, where a late-night talk show is still waiting for its guest.</p>
-            <span class="row"><span>In development</span><span>For 8 guests</span></span>
-          </li>
-        </ul>
-
-        <div class="collab">
-          <h3>With Strange Bird Immersive</h3>
-          <p class="credit">Allen and Chaney are Assistant Producers at Strange Bird Immersive, Houston's immersive theatre and escape room company, where Chaney is also Cast Manager. These are Strange Bird productions.</p>
-          <ul class="collab-list">
-            <li><span class="t">Death Defying</span><span class="d">Helped create the production with the Strange Bird team</span></li>
-            <li><span class="t">The Man From Beyond 2</span><span class="d">Co-created a one-night private immersive event for fellow creators · 2024</span></li>
-            <li><span class="t">On stage</span><span class="d">Allen has performed in more than 300 shows, including The Man From Beyond and The Endings. Chaney has hosted more than 400 as Madame Daphne.</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="founders" id="founders" aria-labelledby="founders-h">
-      <div class="wrap">
-        <span class="label">Founders</span>
-        <h2 id="founders-h">Allen Otto &amp; Chaney Moore</h2>
-        <div class="people">
-          <article class="person">
-            <div class="portrait" role="img" aria-label="Photo of Allen Otto coming soon"><span>AO</span></div>
-            <div>
-              <h3>Allen Otto</h3>
-              <p class="role">Co-founder · Director, performer, educator</p>
-              <p>Allen has worked in performance since 1999 as a musician, actor, director and coach, and serves as a UIL One-Act Play State Adjudicator. He has taught acting and performance across the United States, Canada, Europe and Australia. He is also a trial attorney, Board Certified in Juvenile Law, who trains lawyers nationwide in courtroom storytelling. Since 2022 he has performed in more than 300 shows with Strange Bird Immersive.</p>
-            </div>
-          </article>
-          <article class="person">
-            <div class="portrait" role="img" aria-label="Photo of Chaney Moore coming soon"><span>CM</span></div>
-            <div>
-              <h3>Chaney Moore</h3>
-              <p class="role">Co-founder · Actor, director, voice artist</p>
-              <p>Chaney has been part of Houston's professional theatre scene for nearly two decades and won Broadway World's Best Supporting Actor award. She anchored the Miss Bennet: Christmas at Pemberley trilogy from 2017 to 2025, has voiced characters in more than 60 shows, and has hosted over 400 performances as Madame Daphne with Strange Bird Immersive.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="list-band" id="list" aria-labelledby="list-h">
-      <div class="wrap list-inner">
-        <div>
-          <h2 id="list-h">Be the first to know.</h2>
-          <p>News of new shows, first, and not often.</p>
-        </div>
-        <form class="signup" data-signup>
-          <label class="sr" for="list-email">Email address</label>
-          <input id="list-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-          <button type="submit">Join the list</button>
-          <p class="signup-note" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-foot">
-    <div class="wrap foot-row">
-      <span>© <span data-year>2026</span> Behind the Door, LLC · Houston, Texas</span>
-      <span class="foot-links"><a href="#" id="replay-door">Open the door again</a><a href="mailto:customerservice@behindthedoorimmersive.com">customerservice@behindthedoorimmersive.com</a><a href="https://www.instagram.com/behindthedoorimmersive/" rel="me noopener" target="_blank">Instagram</a></span>
     </div>
-  </footer>
-</div>
+  </section>
 
-<script src="../assets/site.js"></script>
+  <section class="velvet" aria-labelledby="doors-title" style="padding: clamp(70px, 8vw, 110px) 0">
+    <div class="wrap">
+      <p class="label">Our work</p>
+      <h2 id="doors-title" class="sr">Our shows</h2>
+      <ul class="doors">
+      <li>
+        <div class="choice">
+          <div class="choice__art" aria-hidden="true"><div class="door"><div class="door__beyond"></div><div class="door__leaf"><i class="door__panel door__panel--top"></i><i class="door__panel door__panel--low"></i><b class="door__knob"></b></div><div class="door__gap"></div></div><div class="door__spill"></div></div>
+          <p class="choice__status">In development</p>
+          <h3 class="choice__title">String Theory</h3>
+          <p class="choice__line">A tailor shop, a red string, and one choice: tie it or cut it.</p>
+        </div>
+      </li>
+      <li>
+        <a class="choice choice--open" href="work/the-archive/">
+          <div class="choice__art" aria-hidden="true"><div class="door"><div class="door__beyond"></div><div class="door__leaf"><i class="door__panel door__panel--top"></i><i class="door__panel door__panel--low"></i><b class="door__knob"></b></div><div class="door__gap"></div></div><div class="door__spill"></div></div>
+          <p class="choice__status">Ongoing · Houston, TX</p>
+          <h3 class="choice__title">The Archive</h3>
+          <p class="choice__line">Pick up an analog phone. Hear a stranger's memory, or leave your own.</p>
+          <span class="choice__more">Step inside</span>
+        </a>
+      </li>
+      <li>
+        <div class="choice">
+          <div class="choice__art" aria-hidden="true"><div class="door"><div class="door__beyond"></div><div class="door__leaf"><i class="door__panel door__panel--top"></i><i class="door__panel door__panel--low"></i><b class="door__knob"></b></div><div class="door__gap"></div></div><div class="door__spill"></div></div>
+          <p class="choice__status">In development</p>
+          <h3 class="choice__title">WKRV: Stay Tuned</h3>
+          <p class="choice__line">A 1987 talk show loops on a CRT, and slowly turns out to be about you.</p>
+        </div>
+      </li>
+    </ul>
+    </div>
+  </section>
+
+  <section class="invite velvet" id="invite" aria-labelledby="invite-title">
+    <div class="wrap invite__in">
+      <div>
+        <p class="label">Invitations</p>
+        <h2 id="invite-title">The next door opens soon.</h2>
+        <p>Leave your email and we'll send an invitation when it does.</p>
+      </div>
+      <form class="signup" data-signup novalidate>
+        <label class="sr" for="email-invite">Email address</label>
+        <input id="email-invite" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <button class="btn btn--gold" type="submit">Get an invitation</button>
+        <p class="signup__msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__small">© <span data-year>2026</span> Behind the Door, LLC · Houston, Texas</p>
+    <ul class="foot__links">
+      <li><span class="foot__k">Write</span>Email coming soon</li>
+      <li><span class="foot__k">Follow</span>Instagram coming soon</li>
+      <li><a class="foot__replay" href="./?door" data-replay>Open the door again</a></li>
+    </ul>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
 </body>
 </html>

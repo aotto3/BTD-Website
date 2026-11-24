@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wrong door · Behind the Door</title>
+<meta name="theme-color" content="#0c2723">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  .lost { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 80px 24px; }
+  .lost .door { height: min(38svh, 300px); margin: 0 auto 70px; --open: 0; --casing: 8px; }
+  .lost h1 { font-size: clamp(44px, 7vw, 84px); line-height: 1; margin-bottom: 18px; }
+  .lost p { font: italic 400 22px/1.4 var(--serif); color: var(--gold-soft); margin-bottom: 40px; }
+</style>
+</head>
+<body>
+<main class="lost velvet">
+  <div>
+    <div class="door" aria-hidden="true"><div class="door__beyond"></div><div class="door__leaf"><i class="door__panel door__panel--top"></i><i class="door__panel door__panel--low"></i><b class="door__knob"></b></div><div class="door__gap"></div></div>
+    <h1>Wrong door.</h1>
+    <p>Nothing is behind this one. Yet.</p>
+    <a class="btn btn--gold" href="/">Back to the hallway</a>
+  </div>
+</main>
+</body>
+</html>
