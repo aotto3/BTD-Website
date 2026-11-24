@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Behind the Door</title>
+<meta name="description" content="Behind the Door is an immersive theatre company in Houston, Texas, founded by Allen Otto and Chaney Moore.">
+<meta name="theme-color" content="#051412">
+<script>document.documentElement.classList.add("js");</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Work+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<!-- ===== Splash: the door ===== -->
+<div id="splash" class="splash" hidden>
+  <div class="sp-scene">
+    <div class="sp-floorglow" aria-hidden="true"></div>
+    <div class="sp-unit">
+      <div class="sp-frame">
+        <div class="sp-opening" aria-hidden="true"></div>
+        <div class="sp-halo" aria-hidden="true"></div>
+        <button type="button" class="sp-leaf" id="sp-leaf" aria-label="Open the door and enter Behind the Door">
+          <i></i><i></i><i></i><i></i><b></b>
+        </button>
+      </div>
+    </div>
+    <div class="sp-rays" aria-hidden="true"></div>
+    <div class="sp-bloom" aria-hidden="true"></div>
+    <div class="sp-dust" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="sp-flood" aria-hidden="true"></div>
+  <p class="sp-hint" aria-hidden="true">Open the door</p>
+  <a class="sp-skip" href="#top" id="sp-skip">Skip</a>
+</div>
+
+<!-- ===== Home ===== -->
+<div id="home" class="home">
+  <header class="site-head" id="top">
+    <div class="wrap head-row">
+      <a class="wordmark" href="#top" aria-label="Behind the Door, home">Behind the D<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="9.6" r="2.6" fill="#c6a25a"/><path d="M10.6 11 L9.6 17 H14.4 L13.4 11 Z" fill="#c6a25a"/></svg>or</a>
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#work">Our work</a></li>
+          <li><a href="#founders">Founders</a></li>
+          <li><a href="#list">The list</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <span class="label">Immersive theatre · Houston, TX</span>
+        <h1>Small rooms.<br>Real choices.</h1>
+        <p class="lede">Allen Otto and Chaney Moore make shows for a handful of guests at a time. Join the list and we'll tell you when the next one opens.</p>
+        <form class="signup" data-signup>
+          <label class="sr" for="hero-email">Email address</label>
+          <input id="hero-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit">Join the list</button>
+          <p class="signup-note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-h">
+      <div class="wrap about-grid">
+        <div>
+          <span class="label">About</span>
+          <h2 id="about-h" class="statement">No stage. No rows of seats. Just real people in a room making choices.</h2>
+        </div>
+        <div class="about-copy">
+          <p>Behind the Door makes theatre that is small, human and personal. From the moment you walk in, you are not watching something happen. You are part of it.</p>
+          <p>Our actors don't monologue. They converse, they listen, and they push. Each show is built around a choice that only you can make, and it stays with you after you leave.</p>
+          <dl class="tenets">
+            <div><dt>Intimacy</dt><dd>A few guests at a time, often one on one with an actor.</dd></div>
+            <div><dt>Agency</dt><dd>The story can't move without you, and your choices carry weight.</dd></div>
+            <div><dt>Reflection</dt><dd>Shows about how we connect, and what ties us to each other.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="work" id="work" aria-labelledby="work-h">
+      <div class="wrap">
+        <span class="label">Our work</span>
+        <h2 id="work-h">Behind the Door originals</h2>
+        <ul class="tickets">
+          <li class="ticket">
+            <span class="no">Admit two · Nº 0001</span>
+            <h3>String Theory</h3>
+            <p>Two guests are split up in a tailor shop just off-center from reality. At the end, a red string: tie it or cut it.</p>
+            <span class="row"><span>In development</span><span>Houston</span></span>
+          </li>
+          <li class="ticket">
+            <span class="no">Admit one · Nº 0002</span>
+            <h3>The Archive</h3>
+            <p>Pick up an analog phone and hear the stories strangers left behind, or leave one of your own.</p>
+            <span class="row"><span>Voidspace Live</span><span>London · 2026</span></span>
+          </li>
+          <li class="ticket">
+            <span class="no">Admit eight · Nº 0003</span>
+            <h3>WKRV: Stay Tuned</h3>
+            <p>A tour of a 1987 TV set, where a late-night talk show is still waiting for its guest.</p>
+            <span class="row"><span>In development</span><span>For 8 guests</span></span>
+          </li>
+        </ul>
+
+        <div class="collab">
+          <h3>With Strange Bird Immersive</h3>
+          <p class="credit">Allen and Chaney are Assistant Producers at Strange Bird Immersive, Houston's immersive theatre and escape room company, where Chaney is also Cast Manager. These are Strange Bird productions.</p>
+          <ul class="collab-list">
+            <li><span class="t">Death Defying</span><span class="d">Helped create the production with the Strange Bird team</span></li>
+            <li><span class="t">The Man From Beyond 2</span><span class="d">Co-created a one-night private immersive event for fellow creators · 2024</span></li>
+            <li><span class="t">On stage</span><span class="d">Allen has performed in more than 300 shows, including The Man From Beyond and The Endings. Chaney has hosted more than 400 as Madame Daphne.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="founders" id="founders" aria-labelledby="founders-h">
+      <div class="wrap">
+        <span class="label">Founders</span>
+        <h2 id="founders-h">Allen Otto &amp; Chaney Moore</h2>
+        <div class="people">
+          <article class="person">
+            <div class="portrait" role="img" aria-label="Photo of Allen Otto coming soon"><span>AO</span></div>
+            <div>
+              <h3>Allen Otto</h3>
+              <p class="role">Co-founder · Director, performer, educator</p>
+              <p>Allen has worked in performance since 1999 as a musician, actor, director and coach, and serves as a UIL One-Act Play State Adjudicator. He has taught acting and performance across the United States, Canada, Europe and Australia. He is also a trial attorney, Board Certified in Juvenile Law, who trains lawyers nationwide in courtroom storytelling. Since 2022 he has performed in more than 300 shows with Strange Bird Immersive.</p>
+            </div>
+          </article>
+          <article class="person">
+            <div class="portrait" role="img" aria-label="Photo of Chaney Moore coming soon"><span>CM</span></div>
+            <div>
+              <h3>Chaney Moore</h3>
+              <p class="role">Co-founder · Actor, director, voice artist</p>
+              <p>Chaney has been part of Houston's professional theatre scene for nearly two decades and won Broadway World's Best Supporting Actor award. She anchored the Miss Bennet: Christmas at Pemberley trilogy from 2017 to 2025, has voiced characters in more than 60 shows, and has hosted over 400 performances as Madame Daphne with Strange Bird Immersive.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="list-band" id="list" aria-labelledby="list-h">
+      <div class="wrap list-inner">
+        <div>
+          <h2 id="list-h">Be the first to know.</h2>
+          <p>News of new shows, first, and not often.</p>
+        </div>
+        <form class="signup" data-signup>
+          <label class="sr" for="list-email">Email address</label>
+          <input id="list-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit">Join the list</button>
+          <p class="signup-note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap foot-row">
+      <span>© <span data-year>2026</span> Behind the Door, LLC · Houston, Texas</span>
+      <span class="foot-links"><a href="#" id="replay-door">Open the door again</a><a href="mailto:customerservice@behindthedoorimmersive.com">customerservice@behindthedoorimmersive.com</a><a href="https://www.instagram.com/behindthedoorimmersive/" rel="me noopener" target="_blank">Instagram</a></span>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>
