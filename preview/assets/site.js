@@ -135,7 +135,7 @@
 
   /* ---------- Mailing list: each sign-up becomes a row in the "BTD Mailing List" Google Sheet ---------- */
   // The web-app URL from the Apps Script deploy (mailing-list/DEPLOY.md). It ends in /exec.
-  var SIGNUP_URL = "";
+  var SIGNUP_URL = "https://script.google.com/macros/s/AKfycbx1v2h-DQnSrcwkpUxEQqMlltQVNmq6Ey_fn_9jBzUQi1oR-srQbesqcRpM5QpSu9bMWQ/exec";
   var SAY = {
     sending: "Opening…",
     thanks: "Thank you. We'll write when the next door opens.",
