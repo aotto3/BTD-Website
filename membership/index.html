@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Membership · Behind the Door</title>
+<meta name="description" content="Become a member of Behind the Door, an immersive theatre company in Houston, Texas. Give any amount a month; from $5, a letter from the founders, a head start on every booking, and seats on us.">
+<meta name="theme-color" content="#0c2723">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Behind the Door">
+<meta property="og:title" content="Membership · Behind the Door">
+<meta property="og:description" content="Keep the door open. Members are how a theatre for a handful of guests at a time keeps making shows.">
+<meta property="og:url" content="https://behindthedoorimmersive.com/membership/">
+<meta property="og:image" content="https://behindthedoorimmersive.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A green door in a dark hallway, warm light spilling out around it. Behind the Door: immersive theatre, Houston, Texas.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://behindthedoorimmersive.com/membership/">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<script>(function(d){var r=d.documentElement;r.classList.add("js","arriving");})(document);</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/members.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "PerformingGroup", "name": "Behind the Door", "legalName": "Behind the Door, LLC", "url": "https://behindthedoorimmersive.com/", "email": "customerservice@behindthedoorimmersive.com", "sameAs": ["https://www.instagram.com/behindthedoorimmersive/"]}</script>
+</head>
+<body data-membership-api="https://btd-production.up.railway.app">
+<div class="veil" aria-hidden="true"></div>
+
+<header class="head">
+  <div class="wrap head__in">
+    <a class="wordmark" href="../" aria-label="Behind the Door, home"><span>Behind the D</span><svg class="wordmark__key" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.6" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="10" cy="8.4" r="2.1" fill="currentColor"/><path d="M8.9 9.6h2.2l.7 4.6H8.2z" fill="currentColor"/></svg><span>or</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="../preview/company/">Company</a>
+      <a href="../preview/work/">Work</a>
+      <a href="../preview/founders/">Founders</a>
+      <a href="../membership/" aria-current="page">Members</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="mhero pillar velvet" aria-labelledby="hero-title">
+    <div class="pillar__light" aria-hidden="true">
+      <div class="pillar__wash"></div>
+      <div class="pillar__sliver"></div>
+      <div class="pillar__floor"></div>
+      <canvas class="dust" id="dust"></canvas>
+    </div>
+    <div class="wrap hero__in">
+      <p class="label rise" style="--d:0">Membership</p>
+      <h1 id="hero-title" class="rise" style="--d:1">Keep the door open.</h1>
+      <p class="lede rise" style="--d:2">Our shows are made for a handful of guests at a time. Ticket sales from a room that small will never cover the room. Members are how we keep making them.</p>
+      <p class="mhero__facts rise" style="--d:3">Any amount from $1 a month · Change it or leave any time · Payments by Stripe</p>
+    </div>
+  </section>
+
+  <div class="mnotice" id="mnotice" role="status" aria-live="polite" hidden></div>
+
+  <section class="tiers-sec velvet" id="join" aria-labelledby="join-title">
+    <div class="wrap">
+      <div class="join-grid">
+        <div>
+          <p class="label">Your amount</p>
+          <h2 id="join-title">Choose what you give.</h2>
+          <p class="join__lede">Any amount, every month. What you give decides which door opens, and you can change it any time.</p>
+        </div>
+        <form class="join" id="join-form" method="post" action="https://btd-production.up.railway.app/api/checkout">
+          <fieldset class="period" aria-label="Billing period">
+            <legend class="sr">Pay monthly or yearly</legend>
+            <input type="radio" name="interval" id="period-month" value="month" checked>
+            <label for="period-month">Monthly</label>
+            <input type="radio" name="interval" id="period-year" value="year">
+            <label for="period-year">Yearly <span>2 months free</span></label>
+          </fieldset>
+          <label class="join__label" for="amount">Dollars a month</label>
+          <div class="amount">
+            <span class="amount__cur" aria-hidden="true">$</span>
+            <input id="amount" name="amount" type="number" inputmode="numeric" min="1" max="999999" step="1" value="12" required aria-describedby="join-tier">
+            <span class="amount__per" aria-hidden="true">a month</span>
+          </div>
+          <p class="join__tier" id="join-tier" aria-live="polite">Whole dollars, $1 or more. $5 and up opens a door below.</p>
+          <label class="hp" aria-hidden="true">Leave empty <input name="website" tabindex="-1" autocomplete="off"></label>
+          <button class="btn btn--gold join__go" type="submit">Join</button>
+        </form>
+      </div>
+
+      <p class="label tiers-label">What your amount opens</p>
+      <ul class="tiers">
+        <!-- Names, thresholds, summaries and perks must match membership/tiers.json (a test checks). -->
+        <li class="tier" data-tier="keyhole" data-from="5" style="--open:.06">
+          <div class="tier__art" aria-hidden="true"><div class="door"><div class="door__beyond"></div><div class="door__leaf"><i class="door__panel door__panel--top"></i><i class="door__panel door__panel--low"></i><b class="door__knob"></b></div><div class="door__gap"></div></div><div class="door__spill"></div></div>
+          <h3 class="tier__name">Keyhole</h3>
+          <p class="tier__price"><span class="from">From</span> <span class="amt">$5</span> <span class="per">a month</span></p>
+          <p class="tier__sum">See what we are building, and hear first. <span>The Letter every month, and a 24 hour head start on booking every show.</span></p>
+          <ul class="tier__perks">
+            <li>The Letter: one email a month from Allen and Chaney about what is behind the door right now</li>
+            <li>A 24 hour head start on booking every show</li>
+            <li>Your name on our Keyholders page, if you want it there</li>
+          </ul>
+          <a class="btn btn--line tier__pick" href="#join" data-amount="5">Choose $5 a month</a>
+        </li>
+        <li class="tier" data-tier="threshold" data-from="12" style="--open:.14">
+          <div class="tier__art" aria-hidden="true"><div class="door"><div class="door__beyond"></div><div class="door__leaf"><i class="door__panel door__panel--top"></i><i class="door__panel door__panel--low"></i><b class="door__knob"></b></div><div class="door__gap"></div></div><div class="door__spill"></div></div>
+          <h3 class="tier__name">Threshold</h3>
+          <p class="tier__price"><span class="from">From</span> <span class="amt">$12</span> <span class="per">a month</span></p>
+          <p class="tier__sum">First pick of the seats, and a say in what we make. <span>A 72 hour head start on booking, and invitations to test runs of unfinished shows.</span></p>
+          <ul class="tier__perks">
+            <li>Everything in Keyhole</li>
+            <li>A 72 hour head start on booking, before any public sale</li>
+            <li>Invitations to our test runs: unfinished shows we need guests for, a few times a year</li>
+          </ul>
+          <a class="btn btn--line tier__pick" href="#join" data-amount="12">Choose $12 a month</a>
+        </li>
+        <li class="tier" data-tier="inner-room" data-from="30" style="--open:.26">
+          <div class="tier__art" aria-hidden="true"><div class="door"><div class="door__beyond"></div><div class="door__leaf"><i class="door__panel door__panel--top"></i><i class="door__panel door__panel--low"></i><b class="door__knob"></b></div><div class="door__gap"></div></div><div class="door__spill"></div></div>
+          <h3 class="tier__name">Inner Room</h3>
+          <p class="tier__price"><span class="from">From</span> <span class="amt">$30</span> <span class="per">a month</span></p>
+          <p class="tier__sum">A seat on us every year, and a night with the company. <span>One free seat a year, the yearly Members' Night, and your name in our credits.</span></p>
+          <ul class="tier__perks">
+            <li>Everything in Threshold</li>
+            <li>One seat a year at any show, on us</li>
+            <li>The Members' Night: once a year, the company, the sets and the people who keep us going</li>
+            <li>Your name in the thank you credits of every show we open while you are a member</li>
+          </ul>
+          <a class="btn btn--line tier__pick" href="#join" data-amount="30">Choose $30 a month</a>
+        </li>
+        <li class="tier tier--top" data-tier="door-holder" data-from="75" style="--open:.4">
+          <div class="tier__art" aria-hidden="true"><div class="door"><div class="door__beyond"></div><div class="door__leaf"><i class="door__panel door__panel--top"></i><i class="door__panel door__panel--low"></i><b class="door__knob"></b></div><div class="door__gap"></div></div><div class="door__spill"></div></div>
+          <h3 class="tier__name">Door Holders</h3>
+          <p class="tier__price"><span class="from">From</span> <span class="amt">$75</span> <span class="per">a month</span></p>
+          <p class="tier__sum">Twelve people who hold the door open for everyone else. <span>Your membership pays for reduced price seats, so guests who could not otherwise afford a show can still step inside.</span></p>
+          <ul class="tier__perks">
+            <li>Everything in Inner Room</li>
+            <li>Your membership funds reduced price seats for guests who could not otherwise afford to come</li>
+            <li>Two seats a year instead of one</li>
+            <li>A walk through a set before it opens, with the people who built it</li>
+            <li>Credit as a Door Holder on every show we open while you are a member</li>
+          </ul>
+          <a class="btn btn--line tier__pick" href="#join" data-amount="75">Choose $75 a month</a>
+          <p class="tier__flag">12 places</p>
+        </li>
+      </ul>
+
+      <p class="tax-note">Behind the Door, LLC is a for-profit company, so memberships are not tax-deductible. Prices include any tax we owe.</p>
+    </div>
+  </section>
+
+  <section class="promise parlor" aria-labelledby="promise-title">
+    <div class="wrap split">
+      <header>
+        <p class="label label--ink">What we promise</p>
+        <h2 id="promise-title">One letter a month. Everything else happens when a show does.</h2>
+      </header>
+      <div class="prose prose--ink">
+        <p>There are two of us. We would rather make shows than content, so we only promise one thing on a schedule: The Letter, once a month, written by us.</p>
+        <p>Everything else follows the work. When a show goes on sale, members book first. When an unfinished show needs guests, members get the invitations. When we open a show, members are in the credits. Some months that is a lot. Some months it is a letter.</p>
+        <p>A room that holds two guests fills fast. That is why every tier books first.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq velvet" aria-labelledby="faq-title">
+    <div class="wrap split">
+      <header>
+        <p class="label">Questions</p>
+        <h2 id="faq-title">Before you open the door.</h2>
+      </header>
+      <div class="faq__list">
+        <details>
+          <summary>How do I change my amount or leave?</summary>
+          <p>Every receipt has a link to manage your membership, or use <a href="manage/">this page</a>. You can raise or lower your amount, switch between monthly and yearly, update your card or cancel. Raising it starts right away. Lowering it or cancelling takes effect at the end of the month or year you already paid for, and you keep your benefits until then.</p>
+        </details>
+        <details>
+          <summary>Can I give less than $5?</summary>
+          <p>Yes. Any whole dollar amount from $1 a month helps, and every dollar goes into the shows. Tier benefits start at $5 a month. One thing to know: Stripe keeps about 30¢ of every payment, so small amounts go further if you pay yearly.</p>
+        </details>
+        <details>
+          <summary>How does the head start work?</summary>
+          <p>Before a show goes on public sale, members get an email with a booking link that opens early: 24 hours early for Keyhole members, 72 hours for everyone else. Seats are still first come, first served among members.</p>
+        </details>
+        <details>
+          <summary>How do I use my seats on us?</summary>
+          <p>Inner Room and Door Holder members get a code with each new run. Use it once per membership year for any show with seats left. Seats on us do not roll over.</p>
+        </details>
+        <details>
+          <summary>Where does the money go?</summary>
+          <p>Into the shows: rent for rooms, building sets, paying actors. Stripe, our payment processor, keeps about 3.6% plus 30¢ of each payment. Paying yearly means fewer of those 30¢ fees, which is part of why it costs less.</p>
+        </details>
+        <details>
+          <summary>Is it tax-deductible?</summary>
+          <p>Not right now. Behind the Door is a for-profit company today. We are working toward fiscal sponsorship by a nonprofit. If that happens, we will write to every member about what changes before anything changes.</p>
+        </details>
+        <details>
+          <summary>Do you keep my card details?</summary>
+          <p>No. Payments run through Stripe’s own checkout page; your card never touches our website. We keep your name, email, tier and payment history so we can send The Letter and thank you properly. See our <a href="terms/#privacy">membership terms and privacy note</a>.</p>
+        </details>
+        <details>
+          <summary>Can I give a membership as a gift?</summary>
+          <p>Not through this page yet. Write to us at <a href="mailto:customerservice@behindthedoorimmersive.com">customerservice@behindthedoorimmersive.com</a> and we will set one up by hand.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__small">© <span data-year>2026</span> Behind the Door, LLC · Houston, Texas · <a class="foot__link" href="terms/">Membership terms</a></p>
+    <ul class="foot__links">
+      <li><span class="foot__k">Write</span><a class="foot__link" href="mailto:customerservice@behindthedoorimmersive.com">customerservice@<wbr>behindthedoorimmersive.com</a></li>
+      <li><span class="foot__k">Follow</span><a class="foot__link" href="https://www.instagram.com/behindthedoorimmersive/" rel="me">@behindthedoorimmersive</a></li>
+      <li><span class="foot__k">Members</span><a class="foot__link" href="manage/">Manage your membership</a></li>
+      <li><a class="foot__replay" href="../?door" data-replay>Open the door again</a></li>
+    </ul>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+<script src="../assets/members.js"></script>
+</body>
+</html>
